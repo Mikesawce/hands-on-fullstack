@@ -1,16 +1,17 @@
-'use strict'
+// 'use strict'
 //express
 import express from 'express'
-const app = express()
-//middleware to catch requests and parse
-app.use(express.json())
-//postgres
 import pg from 'pg'
-const { Pool } = pg
-//dotenv
+import cors from 'cors'
 import dotenv from 'dotenv'
-dotenv.config()
 
+const app = express()
+
+//port
+const port = 1337
+
+dotenv.config()
+const { Pool } = pg
 const dbPassword = process.env.PASSWORD
 
 //new pool
@@ -21,9 +22,11 @@ const pool = new Pool({
     password: dbPassword,
     port: '5432'
 })
+app.use(cors())
+app.use(express.json())
 app.use(express.static('public'))
 
-async function routes() {
+// async function routes() {
     //Get all route
     app.get('/api/skaters', async (req, res, next) => {
         try {
@@ -150,14 +153,13 @@ async function routes() {
         res.status(err.status || 500)
         res.send(err.message)
     })
-    //port
-    const port = 1337
+    
     //listener
     app.listen(port, () => {
         console.log(`You are now tuned into: ${port}`)
     })
 
 
-}
+// }
 
-routes()
+// routes()
