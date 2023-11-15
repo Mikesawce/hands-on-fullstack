@@ -21,6 +21,7 @@ const pool = new Pool({
     password: dbPassword,
     port: '5432'
 })
+app.use(express.static('public'))
 
 async function routes() {
     //Get all route
