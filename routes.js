@@ -7,13 +7,18 @@ app.use(express.json())
 //postgres
 import pg from 'pg'
 const { Pool } = pg
+//dotenv
+import dotenv from 'dotenv'
+dotenv.config()
+
+const dbPassword = process.env.PASSWORD
 
 //new pool
 const pool = new Pool({
     user: 'postgres',
     host: 'localhost',
     database: 'do_a_kickflip',
-    password: 'TAYlor50855085!!',
+    password: dbPassword,
     port: '5432'
 })
 
